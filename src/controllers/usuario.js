@@ -1,6 +1,8 @@
 const UsuarioBD = require("../models/usuario");
 const response = require('../response/response')
 const code = require('../response/code').CodeResponse 
+const autenticacion=require('../general/metodos_generales')
+const generarJwt=require('../general/generarJWT')
 
 
 module.exports = {
@@ -8,16 +10,32 @@ module.exports = {
   registrarUsuario: async (req, res) => {
     nombreUsuario = req.body.nombre[0].toUpperCase() + req.body.nombre.slice(1)
     nombrePuesto = req.body.puesto[0].toUpperCase() + req.body.puesto.slice(1)
+    
+    emailBody = req.body.email
+    console.log(emailBody)
+    const existeUsuario = await UsuarioBD.findOne({ email: emailBody });
+    console.log(existeUsuario)
+    if (existeUsuario) {
+        return response.responseError(res,code.BAD_REQUEST,"Usuario ya existe");
+    }
+    
     const usuarioBD = new UsuarioBD({
       nombre: nombreUsuario,
-      contraseña: req.body.precio,
+      contraseña: req.body.contraseña,
       email: req.body.email,
       puesto: nombrePuesto
 
 }) 
     try {
       await usuarioBD.save()
-      return response.response(res,code.CREATED,"Usuario Registrado Correctamente",usuarioBD);
+      data = {
+        _id: usuarioBD._id,
+        nombre: usuarioBD.nombre,
+        email: usuarioBD.email,
+        puesto:  usuarioBD.puesto,
+        token: generarJwt(usuarioBD._id),
+      }
+      return response.response(res,code.CREATED,"Usuario Registrado Correctamente",data);
     } catch (error) {
       return response.responseError(res,code.BAD_REQUEST,error.mensaje);
     }
@@ -33,6 +51,11 @@ module.exports = {
     const usuarioBD=await UsuarioBD.findById(id);
     if (!usuarioBD) {
         return response.responseError(res,code.BAD_REQUEST,"Usuario no encontrado");
+    }
+    emailVerifi = req.body.email
+    const existeUsuario = await UsuarioBD.findOne({email: emailVerifi });
+    if (existeUsuario) {
+        return response.responseError(res,code.BAD_REQUEST,"Email ya utilizado");
     }
     nombreUsuario = ""
     if(req.body.nombre!=null){
@@ -51,7 +74,14 @@ module.exports = {
  
     try {
         await usuarioBD.save()
-        return response.response(res,code.ACCEPTED,"Usuario Actualizado Correctamente",usuarioBD);
+        data = {
+          _id: usuarioBD._id,
+          nombre: usuarioBD.nombre,
+          email: usuarioBD.email,
+          puesto:  usuarioBD.puesto,
+          token: generarJwt(usuarioBD._id),
+        }
+        return response.response(res,code.ACCEPTED,"Usuario Actualizado Correctamente",data);
       } catch (error) {
         return response.responseError(res,code.BAD_REQUEST,"Problema al guardar");
       }
@@ -68,6 +98,38 @@ module.exports = {
           return response.responseError(res,code.BAD_REQUEST,"Usuario no encontrado");
       }
         return response.response(res,code.ACCEPTED,"Informacion de Usuario",usuarioBD);
+    },
+
+    login: async (req, res) => {
+      const {email, contraseña } = req.body;
+    
+      //comprobando si el usuario existe
+      const usuario = await UsuarioBD.findOne({ email: email });
+    
+      if (!usuario) {
+        return response.responseError(res,code.BAD_REQUEST,"Usuario no encontrado");
+      }
+      
+      if (usuario.email.toString() !== req.body.email.toString()) {
+          return response.responseError(res,code.BAD_REQUEST,"Email incorrecto");
+        }
+  
+      // Revisar al password
+      if (await usuario.comprobarPassword(contraseña)) {
+        data = {
+          _id: usuario._id,
+          nombre: usuario.nombre,
+          email: usuario.email,
+          puesto:  usuario.puesto,
+          token: generarJwt(usuario._id),
+        }
+
+        return response.response(res,code.ACCEPTED,"Bienvendio a WorkFast",data);
+
+
+      } else {
+        return response.responseError(res,code.BAD_REQUEST,"Contraseña Incorrecta");
+      }
     }
     
 };

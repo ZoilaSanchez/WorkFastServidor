@@ -9,5 +9,9 @@ router.route('/')
 .put(usuarioFunc.actualizarUsuario)
 .get(usuarioFunc.obtenerUsuarioIndividual)
 
+router.route('/login')
+.post(usuarioFunc.login)
+
+
 
 module.exports = router;
