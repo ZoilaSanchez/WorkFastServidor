@@ -62,6 +62,10 @@ module.exports = {
             return response.responseError(res,code.BAD_REQUEST,"headers no encontrado");
         }
         const proveedorBD=await ProveedorBD.findById(id);
+
+        if (!proveedorBD) {
+          return response.responseError(res,code.BAD_REQUEST,"Proveedor no encontrado");
+        }
         return response.response(res,code.ACCEPTED,"Informacion de Proveedor",proveedorBD);
     }  
 };
