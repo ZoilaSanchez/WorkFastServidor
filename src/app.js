@@ -25,10 +25,11 @@ app.get('/',(req,res)=>{
 })
 
 //Rutas para la coleccion de los datos
+const autenticacion=require("./general/rutas_protegidas")
 
 app.use('/api/hello',require('./routes/hello'));
-app.use('/api/proveedor',require('./routes/proveedor'));
-app.use('/api/producto',require('./routes/producto'));
+app.use('/api/proveedor',autenticacion, require('./routes/proveedor'));
+app.use('/api/producto',autenticacion, require('./routes/producto'));
 app.use('/api/usuario',require('./routes/usuario'));
 
 // app.use('/api/muestreo',require('./routes/muestreoRouter'));
