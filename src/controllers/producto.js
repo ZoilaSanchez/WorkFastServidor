@@ -78,6 +78,9 @@ module.exports = {
             return response.responseError(res,code.BAD_REQUEST,"headers no encontrado");
         }
         const productoBD=await ProductoBD.findById(id);
-        return response.response(res,code.ACCEPTED,"Informacion de Proveedor",productoBD);
+        if (!productoBD) {
+          return response.responseError(res,code.BAD_REQUEST,"Producto no encontrado");
+        }
+        return response.response(res,code.ACCEPTED,"Informacion de Producto",productoBD);
     }  
 };
