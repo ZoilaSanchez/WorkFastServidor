@@ -25,9 +25,9 @@ app.get('/',(req,res)=>{
 })
 
 //Rutas para la coleccion de los datos
-//Publicas
+
 app.use('/api/hello',require('./routes/hello'));
-// app.use('/api/producto',require('./routes/productoRouter'));
+app.use('/api/proveedor',require('./routes/proveedor'));
 // app.use('/api/proveedor',require('./routes/proveedorRouter'));
 // app.use('/api/muestreo',require('./routes/muestreoRouter'));
 // app.use('/api/orden/muestreo',require('./routes/ordenMuestreoRouter'));
