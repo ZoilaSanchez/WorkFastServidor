@@ -24,7 +24,7 @@ module.exports = {
   //Modificar Datos del proveedor
   actualizarProveedor: async (req, res) => {
     const { id } = req.headers;
-    if (typeof id == "undefined") {
+    if (typeof id == "undefined"  || id =="") {
         return response.responseError(res,code.BAD_REQUEST,"headers no encontrado");
     }
     const proveedorDB=await ProveedorBD.findById(id);
@@ -58,7 +58,7 @@ module.exports = {
     // Obtener informacion de 1 proveedor
     obtenerProveedorIndividual: async (req, res) => {
         const { id } = req.headers;
-        if (typeof id == "undefined") {
+        if (typeof id == "undefined" || id =="") {
             return response.responseError(res,code.BAD_REQUEST,"headers no encontrado");
         }
         const proveedorBD=await ProveedorBD.findById(id);

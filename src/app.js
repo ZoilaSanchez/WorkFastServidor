@@ -28,7 +28,7 @@ app.get('/',(req,res)=>{
 
 app.use('/api/hello',require('./routes/hello'));
 app.use('/api/proveedor',require('./routes/proveedor'));
-// app.use('/api/proveedor',require('./routes/proveedorRouter'));
+app.use('/api/producto',require('./routes/producto'));
 // app.use('/api/muestreo',require('./routes/muestreoRouter'));
 // app.use('/api/orden/muestreo',require('./routes/ordenMuestreoRouter'));
 // app.use('/api/telegram',require('./routes/telegramRouter'));
