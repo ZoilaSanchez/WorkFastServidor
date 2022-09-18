@@ -74,6 +74,21 @@ module.exports = {
     }
 
     aprobacionMP.observacion = req.body.observacion || aprobacionMP.observacion;
+
+    // aumentar inventario
+    if(aprobacionMP.estado=="True" || aprobacionMP.estado == true){
+      inventarioAumentar =  aprobacionMP.loteIngreso;
+      idProdu =  aprobacionMP.idProducto;
+
+      const productoBD=await ProductoBD.findById(idProdu);
+      if (productoBD) {
+        inventarioActual = productoBD.unidades
+
+        productoBD.unidades = inventarioAumentar + inventarioActual
+        await productoBD.save()
+
+      }
+    }
  
     try {
         await aprobacionMP.save()
