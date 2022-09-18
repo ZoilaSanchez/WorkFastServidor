@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model } = require('mongoose');
 
-const proveedor = new Schema({
+const producto = new Schema({
     "nombre": String,
     "precio": Number,
     "unidades": Number,
@@ -14,5 +14,5 @@ const proveedor = new Schema({
     timestamps: true,
 });
 
-module.exports = model('Producto', proveedor)
+module.exports = model('Producto', producto)
  

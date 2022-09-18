@@ -8,15 +8,43 @@ module.exports = {
   registrarProducto: async (req, res) => {
     nombreProducto = req.body.nombre[0].toUpperCase() + req.body.nombre.slice(1)
     dimensionProducto = req.body.dimensiones[0].toUpperCase() + req.body.dimensiones.slice(1)
+    nivelConfianza = 0
+    if( req.body.nc!=null){
+
+      if(req.body.nc == 90){
+        nivelConfianza=1.64
+      }
+      if(req.body.nc == 95){
+        nivelConfianza=1.96
+      }
+      if(req.body.nc == 99){
+        nivelConfianza=5.58
+      }
+
+    }
+    porError = 0
+    if( req.body.error!=null){
+      porError = req.body.error/100
+    }
+    porExito = 0
+    if( req.body.exito!=null){
+      porExito = req.body.exito/100
+    }
+    porAceptar = 0
+    if( req.body.acepta!=null){
+      porAceptar = req.body.acepta/100
+    }
+
+
     const productoBD = new ProductoBD({
         nombre: nombreProducto,
         precio: req.body.precio,
         unidades: req.body.unidades,
         dimensiones: dimensionProducto,
-        nc: req.body.nc,
-        error: req.body.error,
-        exito: req.body.exito,
-        acepta: req.body.acepta
+        nc:nivelConfianza,
+        error: porError,
+        exito: porExito,
+        acepta: porAceptar
 }) 
     try {
       await productoBD.save()
