@@ -16,6 +16,7 @@ module.exports = {
     const existeUsuario = await UsuarioBD.findOne({ email: emailBody });
     console.log(existeUsuario)
     if (existeUsuario!=null) {
+        console.log("usuario existe")
         return response.responseError(res,code.BAD_REQUEST,"Usuario ya existe");
     }
     
@@ -28,6 +29,8 @@ module.exports = {
 }) 
     try {
       await usuarioBD.save()
+      console.log("estmos dento")
+      console.log( usuarioBD._id)
       data = {
         _id: usuarioBD._id,
         nombre: usuarioBD.nombre,
