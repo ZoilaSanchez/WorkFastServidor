@@ -15,7 +15,7 @@ module.exports = {
     console.log(emailBody)
     const existeUsuario = await UsuarioBD.findOne({ email: emailBody });
     console.log(existeUsuario)
-    if (existeUsuario) {
+    if (existeUsuario!=null) {
         return response.responseError(res,code.BAD_REQUEST,"Usuario ya existe");
     }
     
