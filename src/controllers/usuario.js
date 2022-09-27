@@ -20,6 +20,8 @@ module.exports = {
         return response.responseError(res,code.BAD_REQUEST,"Usuario ya existe");
     }
     
+    console.log("almacenando usuario")
+    
     const usuarioBD = new UsuarioBD({
       nombre: nombreUsuario,
       contraseña: req.body.contraseña,
@@ -27,6 +29,7 @@ module.exports = {
       puesto: nombrePuesto
 
 }) 
+    console.log("Pasamos")
     try {
       await usuarioBD.save()
       console.log("estmos dento")
@@ -40,7 +43,8 @@ module.exports = {
       }
       return response.response(res,code.CREATED,"Usuario Registrado Correctamente",data);
     } catch (error) {
-      return response.responseError(res,code.BAD_REQUEST,error.mensaje);
+      console.log(error)
+      return response.responseError(res,code.BAD_REQUEST,"fallo al guardar");
     }
 
   },
