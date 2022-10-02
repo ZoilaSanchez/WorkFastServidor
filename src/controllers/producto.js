@@ -96,7 +96,7 @@ module.exports = {
     // Obtener todos los producto ordenados por tiempo
     obtenerProducto: async (req, res) => {
         const productoBD=await ProductoBD.find().sort({nombre: 1});
-        return response.response(res,code.ACCEPTED,"Todos los proveedores",productoBD);
+        return response.response(res,code.ACCEPTED,"Todos los productos",productoBD);
     },
 
     // Obtener informacion de 1 producto
