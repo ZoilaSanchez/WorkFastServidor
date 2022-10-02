@@ -31,7 +31,7 @@ app.use('/api/hello',require('./routes/hello'));
 app.use('/api/proveedor',autenticacion, require('./routes/proveedor'));
 app.use('/api/producto',autenticacion, require('./routes/producto'));
 app.use('/api/usuario',require('./routes/usuario'));
-app.use('/api/muestreo',require('./routes/aprobacionMP'));
+app.use('/api/muestreo',autenticacion,require('./routes/aprobacionMP'));
 // app.use('/api/muestreo',require('./routes/muestreoRouter'));
 // app.use('/api/orden/muestreo',require('./routes/ordenMuestreoRouter'));
 // app.use('/api/telegram',require('./routes/telegramRouter'));
