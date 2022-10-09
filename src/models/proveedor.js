@@ -3,7 +3,8 @@ const { Schema, model } = require('mongoose')
 const proveedor = new Schema({
     "nombre": String,
     "telefono": String,
-    "direccion": String
+    "direccion": String,
+    "rol": String
 },
 {
     timestamps: true,
