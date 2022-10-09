@@ -10,7 +10,8 @@ module.exports = {
     const proveedorDB = new ProveedorBD({
         nombre: nombreProveedor,
         telefono: req.body.telefono,
-        direccion: req.body.direccion
+        direccion: req.body.direccion,
+        rol:  req.body.rol
 }) 
     try {
       await proveedorDB.save()
@@ -40,6 +41,7 @@ module.exports = {
     proveedorDB.nombre = nombreProveedor || proveedorDB.nombre;
     proveedorDB.telefono = req.body.telefono || proveedorDB.telefono;
     proveedorDB.direccion = req.body.direccion || proveedorDB.direccion;
+    proveedorDB.rol =  req.body.rol || proveedorDB.rol;
  
     try {
         await proveedorDB.save()

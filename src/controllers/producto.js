@@ -1,4 +1,5 @@
 const ProductoBD = require("../models/producto");
+const ProductoFinalBD = require("../models/productoFinal");
 const response = require('../response/response')
 const code = require('../response/code').CodeResponse 
 
@@ -96,7 +97,7 @@ module.exports = {
     // Obtener todos los producto ordenados por tiempo
     obtenerProducto: async (req, res) => {
         const productoBD=await ProductoBD.find().sort({nombre: 1});
-        return response.response(res,code.ACCEPTED,"Todos los productos",productoBD);
+        return response.response(res,code.ACCEPTED,"Todos los productos Finales",productoBD);
     },
 
     // Obtener informacion de 1 producto
@@ -106,6 +107,71 @@ module.exports = {
             return response.responseError(res,code.BAD_REQUEST,"headers no encontrado");
         }
         const productoBD=await ProductoBD.findById(id);
+        if (!productoBD) {
+          return response.responseError(res,code.BAD_REQUEST,"Producto no encontrado");
+        }
+        return response.response(res,code.ACCEPTED,"Informacion de Producto",productoBD);
+    },
+    
+    //Registrar producto
+  registrarProductoFinal: async (req, res) => {
+    nombreProducto = req.body.nombre[0].toUpperCase() + req.body.nombre.slice(1)
+   
+    const productoBDFinal = new ProductoFinalBD({
+        nombre: nombreProducto,
+        precio: req.body.precio,
+        unidades: req.body.unidades
+    }) 
+    try {
+      await productoBDFinal.save()
+      return response.response(res,code.CREATED,"Producto Registrado Correctamente",productoBDFinal);
+    } catch (error) {
+      return response.responseError(res,code.BAD_REQUEST,error.mensaje);
+    }
+
+  },
+
+  //Modificar Datos del producto
+  actualizarProductoFinal: async (req, res) => {
+    const { id } = req.headers;
+    if (typeof id == "undefined" || id =="") {
+        return response.responseError(res,code.BAD_REQUEST,"headers no encontrado");
+    }
+    const productoBDfinal=await ProductoFinalBD.findById(id);
+    if (!productoBDfinal) {
+        return response.responseError(res,code.BAD_REQUEST,"Producto no encontrado");
+    }
+    nombreProducto = ""
+    if(req.body.nombre!=null){
+      nombreProducto = req.body.nombre[0].toUpperCase() + req.body.nombre.slice(1)
+    }
+
+    productoBDfinal.nombre = nombreProducto || productoBDfinal.nombre;
+    productoBDfinal.precio = req.body.precio || productoBDfinal.precio;
+    productoBDfinal.unidades = req.body.unidades || productoBDfinal.unidades;
+   
+ 
+    try {
+        await productoBDfinal.save()
+        return response.response(res,code.ACCEPTED,"Producto Actualizado Correctamente",productoBDfinal);
+      } catch (error) {
+        return response.responseError(res,code.BAD_REQUEST,"Problema al guardar");
+      }
+    },
+
+    // Obtener todos los producto ordenados por tiempo
+    obtenerProductoFinal: async (req, res) => {
+        const productoBD=await ProductoFinalBD.find().sort({nombre: 1});
+        return response.response(res,code.ACCEPTED,"Todos los productos",productoBD);
+    },
+
+    // Obtener informacion de 1 producto
+    obtenerProductoIndividualFinal: async (req, res) => {
+        const { id } = req.headers;
+        if (typeof id == "undefined" || id =="") {
+            return response.responseError(res,code.BAD_REQUEST,"headers no encontrado");
+        }
+        const productoBD=await ProductoFinalBD.findById(id);
         if (!productoBD) {
           return response.responseError(res,code.BAD_REQUEST,"Producto no encontrado");
         }
