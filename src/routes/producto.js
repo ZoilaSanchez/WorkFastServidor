@@ -12,4 +12,15 @@ router.route('/')
 router.route('/individual')
 .get(productoFunc.obtenerProductoIndividual)
 
+
+/// Producto final
+
+router.route('/final')
+.post(productoFunc.registrarProductoFinal)
+.put(productoFunc.actualizarProductoFinal)
+.get(productoFunc.obtenerProductoFinal)
+
+router.route('/final/individual')
+.get(productoFunc.obtenerProductoIndividualFinal)
+
 module.exports = router;
