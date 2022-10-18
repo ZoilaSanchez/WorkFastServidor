@@ -8,7 +8,7 @@ const despachoMP = new Schema({
     "nombreProducto": String,
     "cantidadSolicitar": Number,
     "dimension": String,
-    "status": Boolean
+    "status": Number // 1 Proceso 2 Cancelada 3 Aceptada
 },
 {
     timestamps: true,

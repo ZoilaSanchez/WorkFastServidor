@@ -21,7 +21,8 @@ module.exports = {
       idProducto: idProdu,
       nombreProducto: productoBD.nombre ,
       cantidadSolicitar: req.body.cantidadSolicitar,
-      dimension: req.body.dimension
+      dimension: req.body.dimension,
+      status: 1
     }) 
     try {
       await despacho.save()
