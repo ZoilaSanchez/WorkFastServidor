@@ -96,7 +96,7 @@ module.exports = {
 
     // Obtener todos los producto ordenados por tiempo
     obtenerProducto: async (req, res) => {
-        const productoBD=await ProductoBD.find().sort({nombre: 1});
+        const productoBD=await ProductoBD.find({ unidades:{"$gt": process.env.MAXMATERIAPRIMA}}).sort({nombre: 1});
         return response.response(res,code.ACCEPTED,"Todos los productos ",productoBD);
     },
 
@@ -161,7 +161,7 @@ module.exports = {
 
     // Obtener todos los producto ordenados por tiempo
     obtenerProductoFinal: async (req, res) => {
-        const productoBD=await ProductoFinalBD.find().sort({nombre: 1});
+        const productoBD=await ProductoFinalBD.find({ unidades:{"$gt": process.env.MAXPRODUCTOFINAL}}).sort({nombre: 1});
         return response.response(res,code.ACCEPTED,"Todos los productos Finales",productoBD);
     },
 
