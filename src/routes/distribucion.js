@@ -8,6 +8,13 @@ router.route('/')
 .post(distribucionFuncionPF.generarOrdenPF)
 .put(distribucionFuncionPF.aprobacionOrden)
 
+router.route('/entrega')
+.get(distribucionFuncionPF.entregas)
 
+router.route('/solicitud')
+.get(distribucionFuncionPF.entregas)
+
+router.route('/historial')
+.get(distribucionFuncionPF.historial)
 
 module.exports = router;

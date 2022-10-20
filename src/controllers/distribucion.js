@@ -68,5 +68,33 @@ module.exports = {
       } catch (error) {
         return response.responseError(res,code.BAD_REQUEST,"Problema al guardar");
       }
-    }  
+    },
+    
+    //Entrega FAbrica - Mayorista
+    entregas: async (req, res) => {
+      tipoEntrega = req.body.tipo
+      if(tipoEntrega==1){ // entregas de fabrica
+        const productoBD=await DistribucionPF.find({ tipoDistribucion: 2, estado:3 }).sort({createdAt: -1});
+        return response.response(res,code.ACCEPTED,"Entregar de Fabrica a mayorista ",productoBD);
+      }
+      else if (tipoEntrega==2){//entregas de mayorista
+        const productoBD=await DistribucionPF.find({ tipoDistribucion: 1, estado:3 }).sort({createdAt: -1});
+        return response.response(res,code.ACCEPTED,"Entregar de Mayorista a Minorista ",productoBD);
+      }
+      
+    },
+
+    historial: async (req, res) => {
+      tipoEntrega = req.body.tipo
+      if(tipoEntrega==2){ //Historial entregas Mayorista - a minorista
+        const productoBD=await DistribucionPF.find({ tipoDistribucion: 1, estado:{"$in": [1,2]} }).sort({createdAt: -1});
+        return response.response(res,code.ACCEPTED,"Historial de Mayorista ",productoBD);
+      }
+      else if (tipoEntrega==1){//Historial entregas Fabrica - a mayorista
+        const productoBD=await DistribucionPF.find({ tipoDistribucion: 2,estado:{"$in": [1,2] }}).sort({createdAt: -1});
+        return response.response(res,code.ACCEPTED,"Historial de Fabrica ",productoBD);
+      }
+      
+    },
+
 };

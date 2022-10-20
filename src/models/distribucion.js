@@ -16,8 +16,8 @@ const distribucionPF = new Schema({
     */
     "tipoDistribucion": Number,
     /*
-     * Minorista-Mayorista (1)
-     * Mayorista-Fabrica (2)
+     * Minorista-Mayorista (1) -- Mayorista
+     * Mayorista-Fabrica (2) -- Fabrica
     */
 
     "estado": Number,

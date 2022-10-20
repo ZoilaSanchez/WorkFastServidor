@@ -33,7 +33,7 @@ app.use('/api/producto',autenticacion, require('./routes/producto'));
 app.use('/api/usuario',require('./routes/usuario'));
 app.use('/api/muestreo',autenticacion,require('./routes/aprobacionMP'));
 app.use('/api/despacho',autenticacion,require('./routes/despachoMP'));
-app.use('/api/distribucion',require('./routes/distribucion'));
+app.use('/api/distribucion',autenticacion,require('./routes/distribucion'));
 // app.use('/api/muestreo',require('./routes/muestreoRouter'));
 // app.use('/api/orden/muestreo',require('./routes/ordenMuestreoRouter'));
 // app.use('/api/telegram',require('./routes/telegramRouter'));
