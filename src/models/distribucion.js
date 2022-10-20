@@ -20,12 +20,13 @@ const distribucionPF = new Schema({
      * Mayorista-Fabrica (2)
     */
 
-    "estado": Number 
+    "estado": Number,
     /*
      * Aceptar(1)
      * Cancelar(2)
      * Proceso(3)
     */
+   "comentario": String
 },
 {
     timestamps: true,

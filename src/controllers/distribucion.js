@@ -5,7 +5,7 @@ const code = require('../response/code').CodeResponse
 
 
 module.exports = {
-  //Registrar proveedor
+  //Registrar orden
   generarOrdenPF: async (req, res) => {
     idProdu = req.body.idProducto
 
@@ -23,7 +23,7 @@ module.exports = {
     const distribucionPF = new DistribucionPF({
       idProducto: idProdu,
       nombreProducto: productoBD.nombre,
-      unidades: req.body.cantidad,
+      unidades: req.body.unidades,
       empresa: req.body.empresa,
       fechaEntrega: myDate,
       tipo: 1,
@@ -40,43 +40,33 @@ module.exports = {
   },
 
   //Modificar Datos del proveedor
-  observacionAprobacionMP: async (req, res) => {
+  aprobacionOrden: async (req, res) => {
     id = req.body.idOrden
     if (typeof id == "undefined"  || id =="" || id==null) {
         return response.responseError(res,code.BAD_REQUEST,"headers no encontrado");
     }
-    const aprobacionMP=await AprobacionMP.findById(id);
-    if (!aprobacionMP) {
+    const distribucionPF=await DistribucionPF.findById(id);
+ 
+    if (!distribucionPF) {
         return response.responseError(res,code.BAD_REQUEST,"Orden no encontrada");
     }
-
-    aprobacionMP.observacion = req.body.observacion || aprobacionMP.observacion;
-
+    distribucionPF.comentario = req.body.comentario || distribucionPF.comentario;
+    distribucionPF.estado = req.body.estado || distribucionPF.estado;
     // aumentar inventario
-    if(aprobacionMP.estado=="True" || aprobacionMP.estado == true){
-      inventarioAumentar =  aprobacionMP.loteIngreso;
-      idProdu =  aprobacionMP.idProducto;
-
-      const productoBD=await ProductoBD.findById(idProdu);
+    if( req.body.estado==1 ){
+      idProdu =  distribucionPF.idProducto;
+      const productoBD=await ProductoBDPF.findById(idProdu);
       if (productoBD) {
         inventarioActual = productoBD.unidades
-
-        productoBD.unidades = inventarioAumentar + inventarioActual
+        productoBD.unidades = inventarioActual - distribucionPF.unidades
         await productoBD.save()
-
       }
     }
- 
     try {
-        await aprobacionMP.save()
-        return response.response(res,code.ACCEPTED,"Orden Actualizada Correctamente",aprobacionMP);
+        await distribucionPF.save()
+        return response.response(res,code.ACCEPTED,"Orden Actualizada Correctamente",distribucionPF);
       } catch (error) {
         return response.responseError(res,code.BAD_REQUEST,"Problema al guardar");
       }
     }  
 };
-
-function calcularMuestra(lote,nc,p,q,errorPorcentaje) {
-  const n = (lote*Math.pow(nc,2)*p*q)/((Math.pow(errorPorcentaje,2)*(lote-1))+(Math.pow(nc,2)*p*q))
-  return Math.round(n)
-}
