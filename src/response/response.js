@@ -12,4 +12,9 @@ usarCtrl.response= async(res,code,message,data) => {
     return res.status(code).json({response,data,message});
 }
 
+usarCtrl.enviado= async(res,code,message) => {
+    response="ok"
+    return res.status(code).json({response,message});
+}
+
 module.exports = usarCtrl;

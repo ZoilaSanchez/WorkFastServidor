@@ -9,6 +9,7 @@ router.route('/')
 .put(productoFunc.actualizarProducto)
 .get(productoFunc.obtenerProducto)
 
+
 router.route('/individual')
 .get(productoFunc.obtenerProductoIndividual)
 
@@ -22,5 +23,9 @@ router.route('/final')
 
 router.route('/final/individual')
 .get(productoFunc.obtenerProductoIndividualFinal)
+
+//Alertas por telegram
+router.route('/telegram')
+.get(productoFunc.revisionUnidadesMateriaPrima)
 
 module.exports = router;

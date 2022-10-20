@@ -1,6 +1,8 @@
 const ProductoBD = require("../models/producto");
 const ProductoFinalBD = require("../models/productoFinal");
 const response = require('../response/response')
+const Telegram = require('../models/telegramIds')
+const msjTelegram = require('../general/msjTelegram')
 const code = require('../response/code').CodeResponse 
 
 
@@ -176,5 +178,38 @@ module.exports = {
           return response.responseError(res,code.BAD_REQUEST,"Producto no encontrado");
         }
         return response.response(res,code.ACCEPTED,"Informacion de Producto",productoBD);
-    }  
+    },
+    
+    // Obtener todos los producto ordenados por tiempo
+    revisionUnidadesMateriaPrima: async (req, res) => {
+
+      // El tipo 1 es producto materia prima
+      // El tipo 2 es producto final
+      tipo = req.body.tipo
+      if(tipo==1){//enviar solicitud de materia prima
+        const productoBD=await ProductoBD.find({ unidades:{"$lte": process.env.MAXMATERIAPRIMA}});
+        var telegramIDS= await Telegram.find({"rol": { $eq: tipo }});
+        console.log(telegramIDS)
+        for (var i = 0; i < productoBD.length; i++) {
+          const producto = productoBD[i]
+          console.log(producto)
+          if(telegramIDS!=null){
+            msjTelegram.enviarMsj(telegramIDS, producto.unidades, producto.nombre)
+          }
+        }
+      }else if(tipo==2){//enviar solicitud de producto final
+        const productoBD=await ProductoFinalBD.find({ unidades:{"$lte": process.env.MAXPRODUCTOFINAL}});
+        var telegramIDS= await Telegram.find({"rol": { $eq: tipo }});
+        console.log(telegramIDS)
+        for (var i = 0; i < productoBD.length; i++) {
+          const producto = productoBD[i]
+          console.log(producto)
+          if(telegramIDS!=null){
+            msjTelegram.enviarMsj(telegramIDS, producto.unidades, producto.nombre)
+          }
+        }
+      }
+
+      return response.enviado(res,code.ACCEPTED,"Servicio Enviado");
+  },
 };
