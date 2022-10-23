@@ -65,10 +65,13 @@ module.exports = {
   //Modificar Datos del proveedor
   observacionAprobacionMP: async (req, res) => {
     id = req.body.idOrden
+    console.log("hola soy lo que envia Andrea1")
+    console.log(req.body)
     if (typeof id == "undefined"  || id =="" || id==null) {
         return response.responseError(res,code.BAD_REQUEST,"headers no encontrado");
     }
     const aprobacionMP=await AprobacionMP.findById(id);
+    console.log(aprobacionMP)
     if (!aprobacionMP) {
         return response.responseError(res,code.BAD_REQUEST,"Orden no encontrada");
     }

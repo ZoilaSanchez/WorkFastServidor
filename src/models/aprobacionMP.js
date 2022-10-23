@@ -9,7 +9,7 @@ const aprobacionMP = new Schema({
     "loteIngreso": Number,
     "defectosIngreso": Number,
     "tamañoLote": Number,
-    "estado": String,
+    "estado": Boolean,
     "cantidadReal": Number,
     "cantidadAceptar": Number,
     "observacion": String
