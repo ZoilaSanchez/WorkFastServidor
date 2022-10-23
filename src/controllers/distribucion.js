@@ -52,6 +52,9 @@ module.exports = {
     }
     distribucionPF.comentario = req.body.comentario || distribucionPF.comentario;
     distribucionPF.estado = req.body.estado || distribucionPF.estado;
+    var myDate = new Date().toISOString();
+    distribucionPF.fechaEntrega =myDate;
+
     // aumentar inventario
     if( req.body.estado==1 ){
       idProdu =  distribucionPF.idProducto;
