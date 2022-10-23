@@ -72,7 +72,7 @@ module.exports = {
     if (!aprobacionMP) {
         return response.responseError(res,code.BAD_REQUEST,"Orden no encontrada");
     }
-
+    console.log("hola soy lo que envia Andrea")
     aprobacionMP.observacion = req.body.observacion || aprobacionMP.observacion;
 
     // aumentar inventario
