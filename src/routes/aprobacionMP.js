@@ -6,7 +6,8 @@ const aprobacionMPFunc = require('../controllers/aprobacionMP')
 
 router.route('/')
 .post(aprobacionMPFunc.registrarAprobacionMP)
-.put(aprobacionMPFunc.observacionAprobacionMP)
+router.route('/muestra')
+.post(aprobacionMPFunc.observacionAprobacionMP)
 
 
 
