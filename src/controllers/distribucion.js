@@ -87,14 +87,18 @@ module.exports = {
     },
     solicitud: async (req, res) => {
       tipoEntrega = req.body.tipo
-      if(tipoEntrega==1){ // entregas de fabrica
+      if(tipoEntrega==2){ // entregas de fabrica
         const productoBD=await DistribucionPF.find({ tipoDistribucion: 2, estado:3 }).sort({createdAt: -1});
         return response.response(res,code.ACCEPTED,"Entregar de Fabrica a mayorista ",productoBD);
       }
-      else if (tipoEntrega==2){//entregas de mayorista
+      else if (tipoEntrega==1){//entregas de mayorista
         const productoBD=await DistribucionPF.find({ tipoDistribucion: 1, estado:3 }).sort({createdAt: -1});
         return response.response(res,code.ACCEPTED,"Entregar de Mayorista a Minorista ",productoBD);
       }
+          /*
+     * Minorista-Mayorista (1) -- Mayorista
+     * Mayorista-Fabrica (2) -- Fabrica
+    */
       
     },
 
