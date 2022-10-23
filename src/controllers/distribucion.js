@@ -25,7 +25,7 @@ module.exports = {
       nombreProducto: productoBD.nombre,
       unidades: req.body.unidades,
       empresa: req.body.empresa,
-      fechaEntrega: myDate,
+      fechaEntrega: req.body.fechaEntrega,
       tipo: 1,
       tipoDistribucion: req.body.tipo ,
       estado: 3,
@@ -52,8 +52,7 @@ module.exports = {
     }
     distribucionPF.comentario = req.body.comentario || distribucionPF.comentario;
     distribucionPF.estado = req.body.estado || distribucionPF.estado;
-    var myDate = new Date().toISOString();
-    distribucionPF.fechaEntrega =myDate;
+    
 
     // aumentar inventario
     if( req.body.estado==1 ){
