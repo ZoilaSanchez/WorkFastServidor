@@ -188,6 +188,9 @@ module.exports = {
       tipo = req.body.tipo
       if(tipo==1){//enviar solicitud de materia prima
         const productoBD=await ProductoBD.find({ unidades:{"$lte": process.env.MONITOREARMAXMATERIAPRIMA}});
+        console.log("..............................")
+        console.log(productoBD)
+        console.log("..............................")
         var telegramIDS= await Telegram.find({"rol": { $eq: tipo }});
         console.log(telegramIDS)
         for (var i = 0; i < productoBD.length; i++) {
@@ -199,6 +202,9 @@ module.exports = {
         }
       }else if(tipo==2){//enviar solicitud de producto final
         const productoBD=await ProductoFinalBD.find({ unidades:{"$lte": process.env.MONITOREARMAXPRODUCTOFINAL}});
+        console.log("..............................")
+        console.log(productoBD)
+        console.log("..............................")
         var telegramIDS= await Telegram.find({"rol": { $eq: tipo }});
         console.log(telegramIDS)
         for (var i = 0; i < productoBD.length; i++) {
