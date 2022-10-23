@@ -6,6 +6,8 @@ usarCtrl.enviarMsj= (telegramIDS,unidades,nombre) => {
 // Creamos una constante que guarda el Token de nuestro Bot de Telegram que previamente hemos creado desde el bot @BotFather
 const bot = new TelegramBot(process.env.TELEGRAM);
 console.log("proceso enviado ..............")
+console.log(telegramIDS)
+console.log("enviamos..................")
     for (var i = 0; i < telegramIDS.length; i++) {
         console.log("Enviando a - ",telegramIDS[i]["chatId"])
         var chatTelegram = telegramIDS[i]["chatId"]
