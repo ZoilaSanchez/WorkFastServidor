@@ -26,6 +26,6 @@ router.route('/final/individual')
 
 //Alertas por telegram
 router.route('/telegram')
-.get(productoFunc.revisionUnidadesMateriaPrima)
+.post(productoFunc.revisionUnidadesMateriaPrima)
 
 module.exports = router;
