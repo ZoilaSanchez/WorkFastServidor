@@ -187,7 +187,7 @@ module.exports = {
       // El tipo 2 es producto final
       tipo = req.body.tipo
       if(tipo==1){//enviar solicitud de materia prima
-        const productoBD=await ProductoBD.find({ unidades:{"$lte": process.env.MAXMATERIAPRIMA}});
+        const productoBD=await ProductoBD.find({ unidades:{"$lte": process.env.MONITOREARMAXMATERIAPRIMA}});
         var telegramIDS= await Telegram.find({"rol": { $eq: tipo }});
         console.log(telegramIDS)
         for (var i = 0; i < productoBD.length; i++) {
@@ -198,7 +198,7 @@ module.exports = {
           }
         }
       }else if(tipo==2){//enviar solicitud de producto final
-        const productoBD=await ProductoFinalBD.find({ unidades:{"$lte": process.env.MAXPRODUCTOFINAL}});
+        const productoBD=await ProductoFinalBD.find({ unidades:{"$lte": process.env.MONITOREARMAXPRODUCTOFINAL}});
         var telegramIDS= await Telegram.find({"rol": { $eq: tipo }});
         console.log(telegramIDS)
         for (var i = 0; i < productoBD.length; i++) {
