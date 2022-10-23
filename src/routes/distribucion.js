@@ -9,12 +9,12 @@ router.route('/')
 .put(distribucionFuncionPF.aprobacionOrden)
 
 router.route('/entrega')
-.get(distribucionFuncionPF.entregas)
+.post(distribucionFuncionPF.entregas)
 
 router.route('/solicitar')
-.get(distribucionFuncionPF.solicitud)
+.post(distribucionFuncionPF.solicitud)
 
 router.route('/historial')
-.get(distribucionFuncionPF.historial)
+.post(distribucionFuncionPF.historial)
 
 module.exports = router;
