@@ -4,7 +4,7 @@ const TelegramBot = require('node-telegram-bot-api');
 
 usarCtrl.enviarMsj= (telegramIDS,unidades,nombre) => {
 // Creamos una constante que guarda el Token de nuestro Bot de Telegram que previamente hemos creado desde el bot @BotFather
-const bot = new TelegramBot(process.env.TELEGRAM);
+var bot = new TelegramBot(process.env.TELEGRAM,{polling: true});
 console.log("proceso enviado ..............")
 console.log(telegramIDS)
 console.log("enviamos..................")
