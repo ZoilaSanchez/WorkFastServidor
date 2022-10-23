@@ -11,8 +11,8 @@ router.route('/')
 router.route('/entrega')
 .get(distribucionFuncionPF.entregas)
 
-router.route('/solicitud')
-.get(distribucionFuncionPF.entregas)
+router.route('/solicitar')
+.get(distribucionFuncionPF.solicitud)
 
 router.route('/historial')
 .get(distribucionFuncionPF.historial)
